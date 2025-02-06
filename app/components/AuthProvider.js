@@ -13,20 +13,19 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (authUser) => {
       setUser(authUser);
-      setLoading(false);
+      setLoading(false); // Définir loading à false APRÈS le traitement
 
-      // Modification clé : redirections conditionnelles et moins agressives
-      if (authUser) {
-        // Si un utilisateur est connecté, navigue vers la page d'accueil sans forcer
-        router.push('/');
-      } else {
-        // Si aucun utilisateur, navigue vers login sans forcer
-        router.push('/login');
+      if (!loading) { // Attendre que le chargement soit terminé
+        const route = window.location.pathname;
+        if (authUser && !['/login', '/register'].includes(route)) {
+          router.push('/');
+        } else if (!authUser && !['/login', '/register'].includes(route)) {
+          router.push('/login');
+        }
       }
     });
-
     return () => unsubscribe();
-  }, []);
+  }, [loading]); 
 
   return (
     <AuthContext.Provider value={{ user, loading }}>
