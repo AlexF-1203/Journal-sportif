@@ -1,7 +1,13 @@
+// Dans App.jsx
+import { useEffect } from 'react';
 import { Slot } from 'expo-router';
-import { AuthProvider } from './app/components/AuthProvider.js';
+import { AuthProvider } from './app/components/AuthProvider';
 
 export default function App() {
+  useEffect(() => {
+    console.log('App component mounted');
+  }, []);
+
   return (
     <AuthProvider>
       <Slot />

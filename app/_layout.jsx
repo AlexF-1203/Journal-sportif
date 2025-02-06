@@ -5,29 +5,20 @@ import { AuthContext } from './components/AuthProvider';
 export default function Layout() {
   const { user, loading } = useContext(AuthContext);
 
-  if (loading) {
-    return null;
-  }
-
   return (
     <Stack screenOptions={{ headerShown: true }}>
+      {/* Routes publiques */}
+      <Stack.Screen name="login" options={{ title: 'Connexion' }} />
+      <Stack.Screen name="register" options={{ title: 'Inscription' }} />
+
+      {/* Routes protégées */}
       <Stack.Screen
-        name="Home"
+        name="index"
         options={{
           title: 'Accueil',
+          // Empêche de retourner à la page de login une fois connecté
           headerBackVisible: false
         }}
-      />
-      <Stack.Screen
-        name="Login"
-        options={{
-          title: 'Connexion',
-          headerBackVisible: false
-        }}
-      />
-      <Stack.Screen
-        name="Register"
-        options={{ title: 'Inscription' }}
       />
     </Stack>
   );

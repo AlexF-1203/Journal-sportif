@@ -11,23 +11,22 @@ export function AuthProvider({ children }) {
   const router = useRouter();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
+    const unsubscribe = onAuthStateChanged(auth, (authUser) => {
+      setUser(authUser);
       setLoading(false);
 
-      if (!user) {
-        router.replace('/login');
+      // Modification clé : redirections conditionnelles et moins agressives
+      if (authUser) {
+        // Si un utilisateur est connecté, navigue vers la page d'accueil sans forcer
+        router.push('/');
       } else {
-        router.replace('/');
+        // Si aucun utilisateur, navigue vers login sans forcer
+        router.push('/login');
       }
     });
 
-    return unsubscribe;
+    return () => unsubscribe();
   }, []);
-
-  if (loading) {
-    return null;
-  }
 
   return (
     <AuthContext.Provider value={{ user, loading }}>
