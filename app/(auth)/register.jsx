@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-import { auth, db } from '../firebase.config';
+import { auth, db } from '../../firebase.config';
 import { useRouter } from 'expo-router';
 
 export default function Register() {
@@ -105,4 +105,3 @@ const styles = StyleSheet.create({
     marginTop: 20,
   }
 });
-
