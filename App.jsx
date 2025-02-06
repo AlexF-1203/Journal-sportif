@@ -1,20 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Slot, Stack } from 'expo-router';
+import { AuthProvider } from './src/components/AuthProvider';
+import { NavigationContainer } from '@react-navigation/native';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AuthProvider>
+      <NavigationContainer independent={true}>
+        <Stack>
+          <Stack.Screen
+            name="login"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="register"
+            options={{ title: 'Inscription' }}
+          />
+          <Stack.Screen
+            name="index"
+            options={{
+              title: 'Accueil',
+              headerLeft: () => null
+            }}
+          />
+        </Stack>
+      </NavigationContainer>
+    </AuthProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
